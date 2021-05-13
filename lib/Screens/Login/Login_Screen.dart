@@ -1,7 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
-import 'package:integrative/constants.dart';
-
 import 'components/Text_Field_Container.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -12,38 +11,35 @@ class LoginScreen extends StatelessWidget {
       body: Container(
           width: double.infinity,
           height: size.height,
-          child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[Background(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                    "LOGIN",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        height: size.height * 0,
-                        fontSize: 18,
-                     ),
-                    ),
-                    RoundedInputField(
-                      hintText: "example@mail.com",
-                      labelText: "Email",
-                      icon: Icon(Icons.person, color: Colors.black),
-                      onChanged: (value) {},
-                    ),
-                    RoundedInputField(
-                      hintText: "Enter Password",
-                      labelText: "Password",
-                      icon: Icon(Icons.lock, color: Colors.black),
-                      onChanged: (value) {},
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 280,
+                  width: 300,
+                  child: Background(
+                    child: Container()
+                  ),
                 ),
-               ),
+                RoundedInputField(
+                  hintText: "example@mail.com",
+                  labelText: "Email",
+                  icon: Icon(
+                      Icons.mail,
+                      color: Colors.black),
+                  onChanged: (value) {},
+                ),
+                RoundedInputField(
+                  hintText: "Enter Password",
+                  labelText: "Password",
+                  icon: Icon(Icons.lock, color: Colors.black),
+                  onChanged: (value) {},
+                ),
               ],
-          )
+            ),
+          ),
       ),
+      appBar: AppBar(title: Text("LOGIN")),
     );
   }
 }

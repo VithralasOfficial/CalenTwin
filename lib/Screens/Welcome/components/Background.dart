@@ -13,16 +13,12 @@ class Background extends StatelessWidget {
     return Container(
       height: size.height,
       width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
+      child: Column(
         children: <Widget>[
-          Positioned(
-              top: 0,
-              child: Image.asset(
-                "assets/images/CalenTwin.png",
-                height: size.height * 0.4,
-                width: size.width * 0.4,
-              )
+          Image.asset(
+            "assets/images/CalenTwin.png",
+            height: size.height * 0.4,
+            width: size.width * 0.4,
           ),
           child,
         ],
