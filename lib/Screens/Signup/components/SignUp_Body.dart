@@ -24,6 +24,14 @@ class SignUpBody extends StatelessWidget {
                     ),
                   ),
                   RoundedInputField(
+                    hintText: "Your Full Name",
+                    labelText: "Name",
+                    icon: Icon(
+                        Icons.person,
+                        color: Colors.black),
+                    onChanged: (value) {},
+                  ),
+                  RoundedInputField(
                     hintText: "example@mail.com",
                     labelText: "Email",
                     icon: Icon(
