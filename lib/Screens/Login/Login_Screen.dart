@@ -11,6 +11,7 @@ class LoginScreen extends StatelessWidget {
       body: LoginBody(),
       appBar: AppBar(
         title: Text("LOGIN"),
+        centerTitle: true,
       backgroundColor: kTextFieldColor,
       ),
     );

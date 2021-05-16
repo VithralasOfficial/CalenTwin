@@ -9,6 +9,7 @@ class SignUpScreen extends StatelessWidget {
       body: SignUpBody(),
       appBar: AppBar(
         title: Text("SIGN UP"),
+        centerTitle: true,
         backgroundColor: kTextFieldColor,
       ),
     );
