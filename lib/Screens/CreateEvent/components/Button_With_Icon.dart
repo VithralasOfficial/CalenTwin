@@ -7,6 +7,7 @@ class ButtonWithIcon extends StatelessWidget {
   final Color color, textColor;
   final Icon icon;
   final double width;
+  final double height;
   const ButtonWithIcon({
     Key? key,
     required this.text,
@@ -14,7 +15,8 @@ class ButtonWithIcon extends StatelessWidget {
     required this.icon,
     this.color = kButtonColor,
     this.textColor = kPrimaryLightColor,
-    this.width = 150
+    this.width = 150,
+    this.height = 40
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class ButtonWithIcon extends StatelessWidget {
           borderRadius: BorderRadius.circular(29),
           child: Container(
             width: width,
+            height: height,
             color: color,
             // ignore: deprecated_member_use
             child: FlatButton(
