@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
-import 'package:integrative/constants.dart';
-import 'components/Event_Creation.dart';
+import '../../constants.dart';
 
-class CreateEvent extends StatelessWidget {
+class UpcomingEventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: kTextFieldColor,
-        title: Text("Create New Event",
+        title: Text("Upcoming Events",
           style: TextStyle(
               fontWeight: FontWeight.bold
           ),
         ),
         actions: <Widget>[
           Container(
-            width: 30,
+              width: 30,
               child: IconButton(
                   onPressed: () {
-                    Navigator.push(context,
+                    Navigator.push(
+                        context,
                         MaterialPageRoute(
                             builder: (context) {
                               return SettingsScreen();
@@ -37,21 +37,21 @@ class CreateEvent extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return HomeScreen();
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomeScreen();
                     },
                   ),
                 );
-                },
+              },
               icon: Icon(
                   Icons.home
               )
           )
         ],
       ),
-      body: EventCreationBody(),
     );
   }
+
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integrative/Screens/CreateEvent/Create_Event.dart';
+import 'package:integrative/Screens/UpcomingEvents/Upcoming_Events_Screen.dart';
+import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
 import 'package:integrative/components/Rounded_Button.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../constants.dart';
@@ -74,7 +76,15 @@ class EventTableState extends State<EventTable> {
             padding: EdgeInsets.symmetric(vertical: 6),
             child: RoundedButton(
                 text: "Upcoming Events",
-                press: () {}
+                press: () {
+                  Navigator.push(
+                      context,
+                    MaterialPageRoute(builder: (context) {
+                      return UpcomingEventsScreen();
+                      },
+                    ),
+                  );
+                },
             ),
           ),
           Container( // Create Event Button
@@ -98,7 +108,14 @@ class EventTableState extends State<EventTable> {
             // ignore: deprecated_member_use
             child: FlatButton(
               padding: EdgeInsets.symmetric(vertical: 5),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) {
+                      return SettingsScreen();
+                    },
+                  ),
+                );
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
