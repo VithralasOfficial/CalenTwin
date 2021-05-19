@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
+import 'components/Upcoming_Events_Body.dart';
 import '../../constants.dart';
 
 class UpcomingEventsScreen extends StatelessWidget {
@@ -51,6 +52,7 @@ class UpcomingEventsScreen extends StatelessWidget {
           )
         ],
       ),
+      body: UpcomingEventsBody(),
     );
   }
 
