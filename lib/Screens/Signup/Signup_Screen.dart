@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'components/SignUp_Body.dart';
 import '../../constants.dart';
 
+import 'package:http/http.dart';
+
 class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
