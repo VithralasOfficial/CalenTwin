@@ -7,6 +7,7 @@ import 'package:integrative/Screens/Login/components/Rounded_Password_Input_Fiel
 import 'package:integrative/Screens/Login/components/Text_Field_Container.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
 import 'package:integrative/components/Rounded_Button.dart';
+import 'package:integrative/API/Http_Caller.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -52,7 +53,9 @@ class _SignUpBodyState extends State<SignUpBody> {
           RoundedButton(
             text: "SIGN UP",
             press: () {
-              signInHttp(mailController.text, usernameController.text);
+              // createNewUser(
+              //                mailController.text, usernameController.text, "avatar");
+              //
             },
           ),
           SizedBox(height: size.height * 0.005),
@@ -77,32 +80,5 @@ class _SignUpBodyState extends State<SignUpBody> {
     mailController.dispose();
     usernameController.dispose();
     super.dispose();
-  }
-
-  void signInHttp(String email, String username) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'accept': 'application/json'
-    };
-
-    var client = http.Client();
-
-    try {
-      print('Sending to server');
-
-      var uriResponse = await client.post(
-          Uri.http("10.0.2.2:8041", "/twins/users"),
-          body: jsonEncode({
-            'email': email,
-            'role': 'PLAYER',
-            'username': username,
-            'avatar': 'J'
-          }),
-          headers: headers);
-
-      print(uriResponse.body);
-    } finally {
-      client.close();
-    }
   }
 }
