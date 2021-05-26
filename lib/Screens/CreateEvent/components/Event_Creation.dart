@@ -176,7 +176,10 @@ class EventCreationBody extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
-          child: RoundedButton(text: "Create Event", press: () {} ),
+          child: RoundedButton(
+              text: "Create Event",
+              press: () {}
+              ),
         )
       ],
     );
