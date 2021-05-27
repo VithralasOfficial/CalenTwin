@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/CreateEvent/Create_Event.dart';
 import 'package:integrative/Screens/UpcomingEvents/Upcoming_Events_Screen.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
@@ -8,6 +9,12 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../../constants.dart';
 
 class EventTable extends StatefulWidget {
+  final UserBoundary user;
+
+  const EventTable(
+      this.user
+      );
+
   @override
   EventTableState createState() => EventTableState();
 }
@@ -32,7 +39,7 @@ class EventTableState extends State<EventTable> {
             width: 100,
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Image.asset(
-                "assets/images/Avatar.png",
+                widget.user.avatar,
               height: size.height * 0.3,
               width: size.height * 0.4,
             )

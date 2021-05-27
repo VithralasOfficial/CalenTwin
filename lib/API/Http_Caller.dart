@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:integrative/Model/ItemBoundary.dart';
 import 'dart:convert';
-
-import 'package:integrative/Model/NewUserDetails.dart';
 import 'package:integrative/Model/OperationBoundary.dart';
 import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/constants.dart';
@@ -10,7 +8,7 @@ import 'package:integrative/constants.dart';
 // ---------- User Related API ---------------
 
 void createNewUser(String email, String username, String avatar,
-    Function onLoaded(UserBoundary userBoundary)) async {
+    void onLoaded(UserBoundary userBoundary)) async {
   var client = http.Client();
 
   try {
@@ -32,7 +30,7 @@ void createNewUser(String email, String username, String avatar,
 
 // Logins valid user and retrieves user details
 void loginValidUser(
-    String email, Function onLoaded(UserBoundary userBoundary)) async {
+    String email, void onLoaded(UserBoundary userBoundary)) async {
   var client = http.Client();
 
   try {
@@ -67,7 +65,7 @@ void createNewItem(
     String userEmail,
     Location location,
     Map<String, dynamic> attributes,
-    Function onLoaded(ItemBoundary itemBoundary)) async {
+    void onLoaded(ItemBoundary itemBoundary)) async {
   var client = http.Client();
 
   try {
@@ -115,7 +113,7 @@ void updateItem(
 }
 
 void retrieveItem(String id, String userEmail,
-    Function onLoaded(ItemBoundary itemBoundary)) async {
+    void onLoaded(ItemBoundary itemBoundary)) async {
   var client = http.Client();
 
   try {
@@ -130,7 +128,7 @@ void retrieveItem(String id, String userEmail,
 }
 
 void getAllItems(String id, String userEmail,
-    Function onLoaded(List<ItemBoundary> allItems)) async {
+    void onLoaded(List<ItemBoundary> allItems)) async {
   var client = http.Client();
 
   try {
@@ -150,7 +148,7 @@ void getAllItems(String id, String userEmail,
 // ----------- Operations Related API -------------
 
 void invokeOperation(String type, String itemId, String userEmail,
-    Map<String, dynamic> attributes, Function onInvoked(dynamic object)) async {
+    Map<String, dynamic> attributes, void onInvoked(dynamic object)) async {
   var client = http.Client();
 
   try {
@@ -176,7 +174,7 @@ void invokeOperationAsync(
     String itemId,
     String userEmail,
     Map<String, dynamic> attributes,
-    Function onInitialized(OperationBoundary operation)) async {
+    void onInitialized(OperationBoundary operation)) async {
   var client = http.Client();
 
   try {

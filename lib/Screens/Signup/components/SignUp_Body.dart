@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:integrative/API/Http_Caller.dart';
+import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/Login/Login_Screen.dart';
 import 'package:integrative/Screens/Login/components/Already_Have_An_Account_Check.dart';
 import 'package:integrative/Screens/Login/components/Rounded_Password_Input_Field.dart';
 import 'package:integrative/Screens/Login/components/Text_Field_Container.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
 import 'package:integrative/components/Rounded_Button.dart';
-import 'package:integrative/API/Http_Caller.dart';
-
-import 'package:http/http.dart' as http;
 
 class SignUpBody extends StatefulWidget {
   @override
@@ -53,10 +50,21 @@ class _SignUpBodyState extends State<SignUpBody> {
           RoundedButton(
             text: "SIGN UP",
             press: () {
-              // createNewUser(
-              //                mailController.text, usernameController.text, "avatar");
-              //
-            },
+              createNewUser(
+                  mailController.text,
+                  usernameController.text,
+                  "assets/images/Avatar.png",
+                      (user) {
+                    print(user.username.toString());
+                    Navigator.push(
+                      context, MaterialPageRoute(builder: (context) {
+                      return HomeScreen(user);
+                     },
+                    ),
+                   );
+                  }
+              );
+            }
           ),
           SizedBox(height: size.height * 0.005),
           AlreadyHaveAnAccountCheck(

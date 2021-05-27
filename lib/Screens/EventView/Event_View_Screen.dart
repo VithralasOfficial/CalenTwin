@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
 import 'components/Event_View_Body.dart';
 
@@ -60,14 +59,7 @@ class EventView extends StatelessWidget {
           ),
           IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return HomeScreen();
-                    },
-                  ),
-                );
+                Navigator.pop(context);
               },
               icon: Icon(
                   Icons.home

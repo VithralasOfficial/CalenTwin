@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class UserBoundary {
   final UserId userId;
@@ -9,7 +8,7 @@ class UserBoundary {
   UserBoundary(this.userId, this.role, this.username, this.avatar);
 
   UserBoundary.fromJson(Map<String, dynamic> json)
-      : userId = UserId.fromJson(jsonDecode(json['userId'])),
+      : userId = UserId.fromJson(json['userId']),
         role = json['role'],
         username = json['username'],
         avatar = json['avatar'];
