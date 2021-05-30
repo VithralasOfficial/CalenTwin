@@ -16,7 +16,7 @@ void createNewUser(String email, String username, String avatar,
         Uri.http("10.0.2.2:8041", "/twins/users"),
         body: jsonEncode({
           'email': email,
-          'role': 'PLAYER',
+          'role': 'MANAGER',
           'username': username,
           'avatar': avatar
         }),
@@ -34,6 +34,7 @@ void loginValidUser(
   var client = http.Client();
 
   try {
+    print("/twins/users/login/$kSpace/$email");
     var uriResponse = await client.get(
         Uri.http("10.0.2.2:8041", "/twins/users/login/$kSpace/$email"),
         headers: kJsonHeaders);
@@ -58,7 +59,6 @@ void updateUserDetails(String email, UserBoundary updatedUser) async {
 // ---------- Digital Items Related API ---------------
 
 void createNewItem(
-    String id,
     String type,
     String name,
     bool active,
@@ -72,14 +72,16 @@ void createNewItem(
     var uriResponse = await client.post(
         Uri.http("10.0.2.2:8041", "/twins/items/$kSpace/$userEmail"),
         body: jsonEncode({
-          'itemId': jsonEncode(ItemId(kSpace, id)),
+          'itemId' : null,
           'type': type,
-          'createdBy': jsonEncode(CreatedBy(UserId(kSpace, userEmail))),
-          'location': jsonEncode(location),
-          'itemAttributes': jsonEncode(attributes)
+          'name' : name,
+          'active': active,
+          'createdBy': CreatedBy(UserId(kSpace, userEmail)).toJson(),
+          'location': location.toJson(),
+          'itemAttributes': attributes
         }),
         headers: kJsonHeaders);
-
+    print(uriResponse.body);
     onLoaded(ItemBoundary.fromJson(jsonDecode(uriResponse.body)));
   } finally {
     client.close();

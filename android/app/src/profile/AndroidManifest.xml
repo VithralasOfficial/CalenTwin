@@ -4,4 +4,8 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAti8b7yFUYl07IeZT43YhD7paVg4EwK2I"/>
+    </application>
 </manifest>

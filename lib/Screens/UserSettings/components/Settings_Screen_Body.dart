@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:integrative/Screens/Welcome/welcome_screen.dart';
 import 'package:integrative/components/Rounded_Button.dart';
 import 'package:integrative/constants.dart';
 import 'Editable_Text.dart';
@@ -46,14 +45,7 @@ class SettingsScreenBody extends StatelessWidget {
             color: kButtonLightColor,
             fontSize: 15,
             press: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                    return WelcomeScreen();
-                    },
-                  ),
-              );
+              Navigator.popUntil(context, (route) => route.isFirst);
             },
         ),
       ],

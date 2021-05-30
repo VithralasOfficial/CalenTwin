@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
 import 'components/Upcoming_Events_Body.dart';
 import '../../constants.dart';
 
 class UpcomingEventsScreen extends StatelessWidget {
+  final List<EventItem>? events;
+  final String avatar;
+
+  const UpcomingEventsScreen({
+    required this.avatar,
+    this.events
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +53,9 @@ class UpcomingEventsScreen extends StatelessWidget {
           )
         ],
       ),
-      body: UpcomingEventsBody(),
+      body: UpcomingEventsBody(
+        events: events,
+        avatar: avatar,),
     );
   }
 

@@ -15,7 +15,7 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text("Don't have an account ? ",
+        Text(login ? "Don't have an account ? " : "Already have an account ? ",
           style: TextStyle(
               color: kTextFieldColor,
               fontSize: 15,

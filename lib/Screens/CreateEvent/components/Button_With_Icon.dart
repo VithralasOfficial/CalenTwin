@@ -8,6 +8,7 @@ class ButtonWithIcon extends StatelessWidget {
   final Icon icon;
   final double width;
   final double height;
+
   const ButtonWithIcon({
     Key? key,
     required this.text,
@@ -32,7 +33,7 @@ class ButtonWithIcon extends StatelessWidget {
             // ignore: deprecated_member_use
             child: FlatButton(
                 padding: EdgeInsets.symmetric(vertical: 10),
-                onPressed: () {},
+                onPressed: press,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

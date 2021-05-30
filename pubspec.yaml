@@ -27,8 +27,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # This dependency is a package of a calender in flutter. DO NOT TOUCH THIS DEPENDENCY!
+  # This dependency is a package of a CALENDAR in flutter. DO NOT TOUCH THIS DEPENDENCY!
   table_calendar: ^3.0.0
+  shared_preferences: ^2.0.6
+  # This dependency is a package of a TIME in flutter. DO NOT TOUCH THIS DEPENDENCY!
+  day_night_time_picker: ^1.0.2
+  # This dependency is a package of a LOCATION in flutter. DO NOT TOUCH THIS DEPENDENCY!
+  place_picker: ^0.9.18
 
 
   # The following adds the Cupertino Icons font to your application.

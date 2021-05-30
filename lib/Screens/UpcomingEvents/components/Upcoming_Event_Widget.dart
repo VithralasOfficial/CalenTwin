@@ -1,27 +1,27 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:integrative/Screens/CreateEvent/components/Simple_Text_Header.dart';
 import 'package:integrative/Screens/EventView/Event_View_Screen.dart';
+import 'package:integrative/Screens/HomePage/components/Event.dart';
 import '../../../constants.dart';
 
 class UpcomingEventWidget extends StatelessWidget {
   final Icon activityCat;
   final Color color;
-  final String activity;
-  final String time;
-  final int numOfParticipants;
+  final EventItem event;
+  final String avatar;
 
   const UpcomingEventWidget({
-    Key? key,
     required this.activityCat,
     required this.color,
-    required this.activity,
-    required this.time,
-    this.numOfParticipants = 4
-  }) : super(key: key);
+    required this.event,
+    required this.avatar,
+  });
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    int numOfParticipants = new Random().nextInt(4);
     return Column(
       children: <Widget>[
         Row(
@@ -35,11 +35,10 @@ class UpcomingEventWidget extends StatelessWidget {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (context) {
                         return EventView(
-                          activity: this.activity,
                           activityCat: this.activityCat,
                           color: this.color,
-                          time: this.time,
-                          numOfParticipants: this.numOfParticipants,
+                          event: event,
+                          avatar: avatar,
                         );
                       },
                     ),
@@ -61,47 +60,50 @@ class UpcomingEventWidget extends StatelessWidget {
                         Container(
                           height: size.height * 0.18,
                           width: size.width * 0.7,
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 3),
-                                child: SimpleTextHeader(text: activity),
-                              ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.symmetric(horizontal: 26),
-                                child: Text(
-                                    time
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 3),
+                                  child: SimpleTextHeader(text: event.title),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
-                                child: Row(
-                                  children: <Widget>[
-                                    if (numOfParticipants > 0)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                                        child: Image.asset("assets/images/Userpic.png"),
-                                      ),
-                                    if (numOfParticipants > 1)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                                        child: Image.asset("assets/images/Userpic2.png"),
-                                      ),
-                                    if (numOfParticipants > 2)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                                        child: Image.asset("assets/images/Userpic3.png"),
-                                      ),
-                                    if (numOfParticipants > 3)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                                        child: Image.asset("assets/images/Userpic4.png"),
-                                      ),
-                                  ],
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: EdgeInsets.symmetric(horizontal: 26),
+                                  child: Text(
+                                      event.date.day.toString() +"/" +event.date.month.toString() +" -> "
+                                          +"Time Scheduled: " +event.hours
+                                  ),
                                 ),
-                              )
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+                                  child: Row(
+                                    children: <Widget>[
+                                      if (numOfParticipants > 0)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                                          child: Image.asset("assets/images/Userpic.png"),
+                                        ),
+                                      if (numOfParticipants > 1)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                                          child: Image.asset("assets/images/Userpic2.png"),
+                                        ),
+                                      if (numOfParticipants > 2)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                                          child: Image.asset("assets/images/Userpic3.png"),
+                                        ),
+                                      if (numOfParticipants > 3)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                                          child: Image.asset("assets/images/Userpic4.png"),
+                                        ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         Padding(

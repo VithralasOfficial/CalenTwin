@@ -4,9 +4,8 @@ import 'components/Event_Table.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserBoundary user;
-
   const HomeScreen(
-    this.user
+    this.user,
   );
 
   @override

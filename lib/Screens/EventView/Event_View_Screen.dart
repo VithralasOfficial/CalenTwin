@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
 import 'components/Event_View_Body.dart';
 
 class EventView extends StatelessWidget {
   final Icon activityCat;
   final Color color;
-  final String activity;
-  final String time;
-  final int numOfParticipants;
+  final EventItem event;
+  final String avatar;
 
   const EventView({
-    Key? key,
     required this.activityCat,
      required this.color,
-    required this.activity,
-    required this.time,
-    this.numOfParticipants = 4
-  }) : super(key: key);
-
+     required this.event,
+     required this.avatar,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +28,13 @@ class EventView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: activityCat,
             ),
-            Text(activity,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
+            Expanded(
+              child: Center(
+                child: Text(event.title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
               ),
             ),
           ],
@@ -59,7 +60,8 @@ class EventView extends StatelessWidget {
           ),
           IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.popUntil(context,
+                        (route) => route.settings.name == "/HomeScreen");
               },
               icon: Icon(
                   Icons.home
@@ -68,8 +70,8 @@ class EventView extends StatelessWidget {
         ],
       ),
       body: EventViewBody(
-        time: this.time,
-        numOfParticipants: this.numOfParticipants,
+        event: event,
+        avatar: avatar,
       ),
     );
   }

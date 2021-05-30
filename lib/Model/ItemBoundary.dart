@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'UserBoundary.dart';
 
@@ -51,7 +50,9 @@ class ItemId {
 
   ItemId.fromJson(Map<String, dynamic> json)
       : space = json['space'],
-        id = json['email'];
+        id = json['id'];
+
+  Map<String, dynamic> toJson() => { "space" : space, "id" : id };
 }
 
 class CreatedBy {
@@ -61,6 +62,10 @@ class CreatedBy {
 
   CreatedBy.fromJson(Map<String, dynamic> json)
       : userId = UserId.fromJson(json['userId']);
+
+  Map<String, dynamic> toJson() {
+    return {"userId" : userId.toJson()};
+  }
 }
 
 class Location {
@@ -72,4 +77,6 @@ class Location {
   Location.fromJson(Map<String, dynamic> json)
       : lat = json['lat'],
         lng = json['lng'];
+
+  Map<String, dynamic> toJson() => { "lat" : lat, "lng" : lng};
 }

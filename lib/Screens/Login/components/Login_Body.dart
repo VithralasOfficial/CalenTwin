@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/API/Http_Caller.dart';
+import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/Signup/Signup_Screen.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
 import 'package:integrative/components/Rounded_Button.dart';
-
 import 'Already_Have_An_Account_Check.dart';
 import 'Rounded_Password_Input_Field.dart';
 import 'Text_Field_Container.dart';
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({
-    Key? key,
-  }) : super(key: key);
+class LoginBody extends StatefulWidget {
+  @override
+  _LoginUpBodyState createState() => _LoginUpBodyState();
+}
+
+  class _LoginUpBodyState extends State<LoginBody> {
+    final mailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,7 @@ class LoginBody extends StatelessWidget {
               ),
             ),
             RoundedInputField(
+              controller: mailController,
               hintText: "example@mail.com",
               labelText: "Email",
               icon: Icon(
@@ -42,27 +47,39 @@ class LoginBody extends StatelessWidget {
             RoundedButton(
               text: "LOGIN",
               press: () {
-                // Navigator.push(
-                //   context,
-                // MaterialPageRoute(
-                //   builder: (context) {
-                //     return HomeScreen();
-                //     },
-                //   ),
-                // );
+                loginValidUser(
+                    mailController.text,
+                    (user) {
+                      print(user.username.toString());
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          settings: RouteSettings(name: "/HomeScreen"),
+                          builder: (context) {
+                            return HomeScreen(user);
+                          },
+                        ),
+                      );
+                    });
               },
             ),
             SizedBox(height: size.height * 0.005),
             AlreadyHaveAnAccountCheck(
               press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUpScreen();
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SignUpScreen();
                     },
                   ),
                 );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) {
+                //       return SignUpScreen();
+                //     },
+                //   ),
+                // );
               },
             )
           ],
