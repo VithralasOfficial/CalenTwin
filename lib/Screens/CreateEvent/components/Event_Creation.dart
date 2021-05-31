@@ -28,11 +28,10 @@ class EventCreationBody extends StatefulWidget {
 
   @override
   EventCreationBodyState createState() => EventCreationBodyState(
-      date: selectedDate,
-      user: user,
-      size: size,
-
-  );
+        date: selectedDate,
+        user: user,
+        size: size,
+      );
 }
 
 class EventCreationBodyState extends State<EventCreationBody> {
@@ -70,41 +69,34 @@ class EventCreationBodyState extends State<EventCreationBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      centerTitle: true,
-      backgroundColor: kTextFieldColor,
-      title: Text("Create New Event",
-        style: TextStyle(
-            fontWeight: FontWeight.bold
+        centerTitle: true,
+        backgroundColor: kTextFieldColor,
+        title: Text(
+          "Create New Event",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: <Widget>[
+          Container(
+              width: 30,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return SettingsScreen();
+                        },
+                      ),
+                    );
+                  },
+                  icon: Icon(Icons.settings_sharp))),
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.home))
+        ],
       ),
-      actions: <Widget>[
-        Container(
-            width: 30,
-            child: IconButton(
-                onPressed: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SettingsScreen();
-                      },
-                    ),
-                  );
-                },
-                icon: Icon(
-                    Icons.settings_sharp
-                )
-            )
-        ),
-        IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-                Icons.home
-            )
-        )
-      ],
-    ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -113,8 +105,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
                 hintText: "Your Event",
                 labelText: "Name",
                 icon: Icon(Icons.event, color: Colors.black),
-                onChanged: (value) {}
-                ),
+                onChanged: (value) {}),
             SimpleTextHeader(text: "Event Type"),
             Row(
               children: [
@@ -122,37 +113,40 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   width: 25,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                   child: ButtonWithIcon(
                       text: "Work Meeting",
                       icon: Icon(
                         Icons.cases_outlined,
                         color: kPrimaryLightColor,
                       ),
-                    press: () {
+                      press: () {
                         setState(() {
                           buttonColors = 1;
                         });
                         category = "Work Meeting";
-                    },
-                    color: buttonColors == 1 ? Color(0xFFBF000C) : Color(0x94A70208)
-                  ),
+                      },
+                      color: buttonColors == 1
+                          ? Color(0xFFBF000C)
+                          : Color(0x94A70208)),
                 ),
                 ButtonWithIcon(
-                  text: "Party",
-                  icon: Icon(
-                    Icons.people_alt_outlined,
-                    color: kPrimaryLightColor,
-                  ),
-                  press: () {
-                    setState(() {
-                      buttonColors = 2;
-                    });
-                    category = "Party";
-                  },
-                  width: 110,
-                  color: buttonColors == 2 ? Color(0xFFC7AC00) : Color(0x8CC7AC00)
-                )
+                    text: "Party",
+                    icon: Icon(
+                      Icons.people_alt_outlined,
+                      color: kPrimaryLightColor,
+                    ),
+                    press: () {
+                      setState(() {
+                        buttonColors = 2;
+                      });
+                      category = "Party";
+                    },
+                    width: 110,
+                    color: buttonColors == 2
+                        ? Color(0xFFC7AC00)
+                        : Color(0x8CC7AC00))
               ],
             ),
             Row(
@@ -175,8 +169,9 @@ class EventCreationBodyState extends State<EventCreationBody> {
                         });
                         category = "Call";
                       },
-                      color: buttonColors == 3 ? Color(0xFF00B32C) : Color(0x8000A828)
-                  ),
+                      color: buttonColors == 3
+                          ? Color(0xFF00B32C)
+                          : Color(0x8000A828)),
                 ),
                 ButtonWithIcon(
                   text: "Other",
@@ -197,9 +192,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
-              child: SimpleTextHeader(
-                  text: "Participants"
-              ),
+              child: SimpleTextHeader(text: "Participants"),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
@@ -211,37 +204,35 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Image.asset(
-                        "assets/images/Userpic.png",
+                      "assets/images/Userpic.png",
                       scale: 0.75,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Image.asset(
-                        "assets/images/Userpic2.png",
+                      "assets/images/Userpic2.png",
                       scale: 0.75,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Image.asset(
-                        "assets/images/Userpic3.png",
+                      "assets/images/Userpic3.png",
                       scale: 0.75,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Image.asset(
-                        "assets/images/Userpic4.png",
+                      "assets/images/Userpic4.png",
                       scale: 0.75,
                     ),
                   ),
                 ],
               ),
             ),
-            SimpleTextHeader(
-              text: "Event Details"
-            ),
+            SimpleTextHeader(text: "Event Details"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ButtonWithIcon(
@@ -251,7 +242,8 @@ class EventCreationBodyState extends State<EventCreationBody> {
                 textColor: Colors.grey,
                 press: () {},
                 icon: Icon(
-                  Icons.person_add_alt_1_outlined, color: Colors.grey,
+                  Icons.person_add_alt_1_outlined,
+                  color: Colors.grey,
                 ),
               ),
             ),
@@ -263,19 +255,20 @@ class EventCreationBodyState extends State<EventCreationBody> {
                 text: "Add Location",
                 textColor: Colors.grey,
                 press: () async {
-                  LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          PlacePicker("AIzaSyAti8b7yFUYl07IeZT43YhD7paVg4EwK2I",
-                            displayLocation: LatLng(location.lat, location.lng),
-                          )
-                       )
-                  );
+                  LocationResult result =
+                      await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PlacePicker(
+                                "AIzaSyAti8b7yFUYl07IeZT43YhD7paVg4EwK2I",
+                                displayLocation:
+                                    LatLng(location.lat, location.lng),
+                              )));
                   // Handle the result in your way
                   location.lat = result.latLng!.latitude;
                   location.lng = result.latLng!.longitude;
-                   },
+                },
                 icon: Icon(
-                  Icons.add_location_alt_outlined, color: Colors.grey,
+                  Icons.add_location_alt_outlined,
+                  color: Colors.grey,
                 ),
               ),
             ),
@@ -290,45 +283,44 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   showDialog(
                       context: context,
                       builder: (_) => new AlertDialog(
-                        title: new Text("Event Description"),
-                        content: Container(
-                          width: size.width * 0.8,
-                          height: size.height * 0.3,
-                          child: new TextField(
-                            controller: descriptionController,
-                            keyboardType: TextInputType.multiline,
-                            maxLines: 4,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            hintText: "Insert Description...",
-                            labelText: "Event Description",
-                           ),
-                          ),
-                        ),
-                        actions: <Widget>[
-                          // ignore: deprecated_member_use
-                          FlatButton(
-                            child: Text("Cancel"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                              descriptionController.text = description;
-                            },
-                          ),
-                          // ignore: deprecated_member_use
-                          FlatButton(
-                            child: Text("Ok"),
-                            onPressed: () {
-                              description = descriptionController.text;
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      )
-                  );
+                            title: new Text("Event Description"),
+                            content: Container(
+                              width: size.width * 0.8,
+                              height: size.height * 0.3,
+                              child: new TextField(
+                                controller: descriptionController,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 4,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Insert Description...",
+                                  labelText: "Event Description",
+                                ),
+                              ),
+                            ),
+                            actions: <Widget>[
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                child: Text("Cancel"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  descriptionController.text = description;
+                                },
+                              ),
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  description = descriptionController.text;
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ));
                 },
-
                 icon: Icon(
-                  Icons.view_headline_sharp, color: Colors.grey,
+                  Icons.view_headline_sharp,
+                  color: Colors.grey,
                 ),
               ),
             ),
@@ -352,9 +344,10 @@ class EventCreationBodyState extends State<EventCreationBody> {
                       maxMinute: 59,
                     ),
                   );
-                  },
+                },
                 icon: Icon(
-                  Icons.access_time, color: Colors.grey,
+                  Icons.access_time,
+                  color: Colors.grey,
                 ),
               ),
             ),
@@ -370,8 +363,10 @@ class EventCreationBodyState extends State<EventCreationBody> {
                       owner: user.userId.email,
                       hours: hours,
                       description: description,
-                      );
+                    );
                     print(attributes[eventController.text]);
+                    user.role = "MANAGER";
+                    updateUserDetails(user.userId.email, user);
                     createNewItem(
                         "Event",
                         eventController.text,
@@ -379,15 +374,11 @@ class EventCreationBodyState extends State<EventCreationBody> {
                         user.userId.email,
                         location,
                         attributes[eventController.text].toJson(),
-                        (event) => (
-                          print(event.itemId.id)
-                        )
-                      );
+                        (event) => (print(event.itemId.id)));
                     user.events.add(attributes[eventController.text]);
                     print(user.events.toString());
                     Navigator.pop(context);
-                    }
-                  ),
+                  }),
             )
           ],
         ),
@@ -395,4 +386,3 @@ class EventCreationBodyState extends State<EventCreationBody> {
     );
   }
 }
-

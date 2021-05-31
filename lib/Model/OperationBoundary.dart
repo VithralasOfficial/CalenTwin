@@ -61,12 +61,20 @@ class OperationItem {
 
   OperationItem.fromJson(Map<String, dynamic> json)
       : itemId = ItemId.fromJson(json['itemId']);
+
+  Map<String, dynamic> toJson() {
+    return {"itemId": itemId.toJson()};
+  }
 }
 
 class InvokedBy {
   UserId userId;
 
   InvokedBy(this.userId);
+
+  Map<String, dynamic> toJson() {
+    return {"userId": userId.toJson()};
+  }
 
   InvokedBy.fromJson(Map<String, dynamic> json)
       : userId = UserId.fromJson(json['userId']);

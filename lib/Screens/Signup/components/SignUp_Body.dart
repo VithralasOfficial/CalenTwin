@@ -26,7 +26,7 @@ class _SignUpBodyState extends State<SignUpBody> {
         child: SingleChildScrollView(
             child: Column(children: <Widget>[
           Container(
-            height: 274,
+            height: size.height / 2.5,
             width: 300,
             child: Background(child: Container()),
           ),
@@ -48,24 +48,21 @@ class _SignUpBodyState extends State<SignUpBody> {
             onChanged: (value) {},
           ),
           RoundedButton(
-            text: "SIGN UP",
-            press: () {
-              createNewUser(
-                  mailController.text,
-                  usernameController.text,
-                  "assets/images/Avatar.png",
-                      (user) {
-                    print(user.username.toString());
-                    Navigator.push(
-                      context, MaterialPageRoute(builder: (context) {
-                      return HomeScreen(user);
-                     },
+              text: "SIGN UP",
+              press: () {
+                createNewUser(mailController.text, usernameController.text,
+                    "assets/images/Avatar.png", (user) {
+                  print(user.username.toString());
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return HomeScreen(user);
+                      },
                     ),
-                   );
-                  }
-              );
-            }
-          ),
+                  );
+                });
+              }),
           SizedBox(height: size.height * 0.005),
           AlreadyHaveAnAccountCheck(
             login: false,

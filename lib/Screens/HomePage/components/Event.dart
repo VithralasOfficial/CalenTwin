@@ -9,7 +9,6 @@ class EventItem {
   final DateTime date;
   final List<UserBoundary>? participants;
 
-
   EventItem({
     required this.title,
     required this.date,
@@ -20,21 +19,43 @@ class EventItem {
     this.participants,
   });
 
+  EventItem.fromJson(Map<String, dynamic> json)
+      : title = json['title'],
+        date = DateTime.parse(json['date']),
+        hours = json['hours'],
+        category = json['category'],
+        owner = json['owner'],
+        description = json['description'],
+        participants = [];
+
   String toString() {
-    return "Title: " +this.title
-        +", Date: " +this.date.day.toString() +"/" +this.date.month.toString()
-        +"/" +this.date.year.toString()
-        +", Hour: "+this.hours +" Category: " +this.category +", Owner: " +this.owner
-        +", Description: " +this.description +", Participants: " +this.participants.toString();
+    return "Title: " +
+        this.title +
+        ", Date: " +
+        this.date.day.toString() +
+        "/" +
+        this.date.month.toString() +
+        "/" +
+        this.date.year.toString() +
+        ", Hour: " +
+        this.hours +
+        " Category: " +
+        this.category +
+        ", Owner: " +
+        this.owner +
+        ", Description: " +
+        this.description +
+        ", Participants: " +
+        this.participants.toString();
   }
 
   Map<String, dynamic> toJson() => {
-    'title' : title,
-    'date' : date.day.toString() +"/" +date.month.toString() +"/" + date.year.toString(),
-    'hours' : hours,
-    'category' : category,
-    'owner' : owner,
-    'participants' : participants.toString(),
-    'description' : description,
-  };
+        'title': title,
+        'date': date.toString(),
+        'hours': hours,
+        'category': category,
+        'owner': owner,
+        'participants': participants.toString(),
+        'description': description,
+      };
 }

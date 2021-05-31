@@ -1,11 +1,11 @@
 import 'package:integrative/Screens/HomePage/components/Event.dart';
 
 class UserBoundary {
-  final UserId userId;
-  final String role;
-  final String username;
-  final String avatar;
-  List<EventItem> events = [];
+  UserId userId;
+  String role;
+  String username;
+  String avatar;
+  Set<EventItem> events = {};
 
   UserBoundary(this.userId, this.role, this.username, this.avatar);
 

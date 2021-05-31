@@ -45,12 +45,12 @@ void loginValidUser(
   }
 }
 
-void updateUserDetails(String email, UserBoundary updatedUser) async {
+Future<void> updateUserDetails(String email, UserBoundary updatedUser) async {
   var client = http.Client();
 
   try {
     await client.put(Uri.http("10.0.2.2:8041", "/twins/users/$kSpace/$email"),
-        headers: kJsonHeaders, body: updatedUser.toJson());
+        headers: kJsonHeaders, body: jsonEncode(updatedUser.toJson()));
   } finally {
     client.close();
   }
@@ -72,9 +72,9 @@ void createNewItem(
     var uriResponse = await client.post(
         Uri.http("10.0.2.2:8041", "/twins/items/$kSpace/$userEmail"),
         body: jsonEncode({
-          'itemId' : null,
+          'itemId': null,
           'type': type,
-          'name' : name,
+          'name': name,
           'active': active,
           'createdBy': CreatedBy(UserId(kSpace, userEmail)).toJson(),
           'location': location.toJson(),
@@ -104,7 +104,7 @@ void updateItem(
         body: jsonEncode({
           'itemId': jsonEncode(ItemId(kSpace, id)),
           'type': type,
-          'createdBy': jsonEncode(CreatedBy(UserId(kSpace, userEmail))),
+          'createdBy': CreatedBy(UserId(kSpace, userEmail)).toJson(),
           'location': jsonEncode(location),
           'itemAttributes': jsonEncode(attributes)
         }),
@@ -157,11 +157,11 @@ void invokeOperation(String type, String itemId, String userEmail,
     var response =
         await client.post(Uri.http("10.0.2.2:8041", "/twins/operations"),
             body: jsonEncode({
-              'item': jsonEncode(OperationItem(ItemId(kSpace, itemId))),
+              'item': OperationItem(ItemId(kSpace, itemId)).toJson(),
               'type': type,
               'operationId': null,
-              'invokedBy': jsonEncode(InvokedBy(UserId(kSpace, userEmail))),
-              'itemAttributes': jsonEncode(attributes)
+              'invokedBy': InvokedBy(UserId(kSpace, userEmail)).toJson(),
+              'operationAttributes': (attributes)
             }),
             headers: kJsonHeaders);
 
