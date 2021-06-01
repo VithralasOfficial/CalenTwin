@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/Screens/UserSettings/Settings_Screen.dart';
 import 'components/Event_View_Body.dart';
@@ -8,12 +9,14 @@ class EventView extends StatelessWidget {
   final Color color;
   final EventItem event;
   final String avatar;
+  final UserBoundary user;
 
   const EventView({
     required this.activityCat,
      required this.color,
      required this.event,
      required this.avatar,
+    required this.user
   });
 
   @override
@@ -48,7 +51,7 @@ class EventView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SettingsScreen();
+                          return SettingsScreen(user: user);
                         },
                       ),
                     );
