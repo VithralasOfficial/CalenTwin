@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:integrative/API/Http_Caller.dart' as httpCaller;
+import 'package:integrative/Model/ItemBoundary.dart';
 import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/HomePage/Home_Screen.dart';
 import 'package:integrative/Screens/HomePage/components/Event.dart';
@@ -81,15 +82,16 @@ class _LoginUpBodyState extends State<LoginBody> {
   }
 
   void loadUserEvents(UserBoundary user) async {
-    user.role = 'PLAYER';
-    await httpCaller.updateUserDetails(user.userId.email, user);
     httpCaller.invokeOperation(
         "getMyEvents",
         user.userId.space + "-calendar-" + user.userId.email,
         user.userId.email,
         {'size': 100, 'page': 0}, (response) {
-      for (String s in response) {
-        user.events.add(EventItem.fromJson(jsonDecode(s)));
+      for (Map<String, dynamic> itemMap in response) {
+        EventItem eventLoaded = EventItem.fromJson(itemMap['itemAttributes']);
+        ItemId id = ItemId.fromJson(itemMap['itemId']);
+        eventLoaded.itemId = id.id + '\$' + id.space;
+        user.events.add(eventLoaded);
       }
 
       Navigator.push(

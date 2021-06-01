@@ -16,7 +16,7 @@ void createNewUser(String email, String username, String avatar,
         Uri.http("10.0.2.2:8041", "/twins/users"),
         body: jsonEncode({
           'email': email,
-          'role': 'MANAGER',
+          'role': 'PLAYER',
           'username': username,
           'avatar': avatar
         }),
@@ -58,7 +58,7 @@ Future<void> updateUserDetails(String email, UserBoundary updatedUser) async {
 
 // ---------- Digital Items Related API ---------------
 
-void createNewItem(
+Future<void> createNewItem(
     String type,
     String name,
     bool active,
@@ -183,15 +183,15 @@ void invokeOperationAsync(
     var response =
         await client.post(Uri.http("10.0.2.2:8041", "/twins/operations/async"),
             body: jsonEncode({
-              'item': jsonEncode(OperationItem(ItemId(kSpace, itemId))),
+              'item': OperationItem(ItemId(kSpace, itemId)).toJson(),
               'type': type,
               'operationId': null,
-              'invokedBy': jsonEncode(InvokedBy(UserId(kSpace, userEmail))),
-              'itemAttributes': jsonEncode(attributes)
+              'invokedBy': InvokedBy(UserId(kSpace, userEmail)).toJson(),
+              'operationAttributes': (attributes)
             }),
             headers: kJsonHeaders);
 
-    onInitialized(OperationBoundary.fromJson(jsonDecode(response.body)));
+    onInitialized(jsonDecode(response.body));
   } finally {
     client.close();
   }

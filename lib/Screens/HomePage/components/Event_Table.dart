@@ -155,17 +155,7 @@ class EventTableState extends State<EventTable> {
               child: RoundedButton(
                 text: "Upcoming Events",
                 press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return UpcomingEventsScreen(
-                          events: user.events.toList(),
-                          avatar: user.avatar,
-                        );
-                      },
-                    ),
-                  );
+                  loadUpcomingEvents();
                 },
               ),
             ),
@@ -224,5 +214,42 @@ class EventTableState extends State<EventTable> {
         ),
       ),
     );
+  }
+
+  void loadUpcomingEvents() async {
+    List<EventItem> upcomingEvents = [];
+
+    httpCaller.invokeOperation(
+        "getUpcomingEvents",
+        user.userId.space + "-calendar-" + user.userId.email,
+        user.userId.email,
+        {'size': 100, 'page': 0, 'daysRange': 14}, (response) {
+      print("RESPNSE: " + response.toString());
+      for (Map<String, dynamic> itemMap in response) {
+        EventItem eventLoaded = EventItem.fromJson(itemMap['itemAttributes']);
+        ItemId id = ItemId.fromJson(itemMap['itemId']);
+        eventLoaded.itemId = id.id + '\$' + id.space;
+        upcomingEvents.add(eventLoaded);
+      }
+      upcomingEvents.sort((a, b) {
+        int result = a.date.compareTo(b.date);
+        if (result == 0) {
+          return a.hours.compareTo(b.hours);
+        }
+        return result;
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return UpcomingEventsScreen(
+              events: upcomingEvents,
+              avatar: user.avatar,
+            );
+          },
+        ),
+      );
+    });
   }
 }

@@ -7,6 +7,7 @@ class EventItem {
   final String hours;
   final String description;
   final DateTime date;
+  String? itemId;
   final List<UserBoundary>? participants;
 
   EventItem({
@@ -16,6 +17,7 @@ class EventItem {
     required this.category,
     required this.owner,
     required this.description,
+    this.itemId,
     this.participants,
   });
 
@@ -25,6 +27,7 @@ class EventItem {
         hours = json['hours'],
         category = json['category'],
         owner = json['owner'],
+        itemId = null,
         description = json['description'],
         participants = [];
 
@@ -43,6 +46,8 @@ class EventItem {
         this.category +
         ", Owner: " +
         this.owner +
+        ", itemId: " +
+        this.itemId! +
         ", Description: " +
         this.description +
         ", Participants: " +

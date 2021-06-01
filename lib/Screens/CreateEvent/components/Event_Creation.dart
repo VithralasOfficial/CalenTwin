@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:day_night_time_picker/lib/constants.dart';
 import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -57,11 +60,17 @@ class EventCreationBodyState extends State<EventCreationBody> {
 
   void onTimeChanged(TimeOfDay newTime) {
     setState(() {
+      hours = "";
       timeOfDay = newTime;
-      if (timeOfDay.minute < 10)
-        hours = timeOfDay.hour.toString() + ":0" + timeOfDay.minute.toString();
+      if (timeOfDay.hour < 10)
+        hours += "0" + timeOfDay.hour.toString();
       else
-        hours = timeOfDay.hour.toString() + ":" + timeOfDay.minute.toString();
+        hours += timeOfDay.hour.toString();
+
+      if (timeOfDay.minute < 10)
+        hours += ":0" + timeOfDay.minute.toString();
+      else
+        hours += ":" + timeOfDay.minute.toString();
     });
   }
 
@@ -355,7 +364,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: RoundedButton(
                   text: "Create Event",
-                  press: () {
+                  press: () async {
                     attributes[eventController.text] = EventItem(
                       title: eventController.text,
                       date: date,
@@ -364,21 +373,56 @@ class EventCreationBodyState extends State<EventCreationBody> {
                       hours: hours,
                       description: description,
                     );
-                    print(attributes[eventController.text]);
-                    user.role = "MANAGER";
-                    updateUserDetails(user.userId.email, user);
-                    createNewItem(
+                    EventItem newEventItem = EventItem.fromJson(
+                        attributes[eventController.text].toJson());
+
+                    user.role = 'MANAGER';
+                    await updateUserDetails(user.userId.email, user);
+                    await createNewItem(
                         "Event",
                         eventController.text,
                         true,
                         user.userId.email,
                         location,
-                        attributes[eventController.text].toJson(),
-                        (event) => (print(event.itemId.id)));
-                    user.events.add(attributes[eventController.text]);
-                    print(user.events.toString());
-                    Navigator.pop(context);
+                        attributes[eventController.text].toJson(), (event) {
+                      newEventItem.itemId =
+                          event.itemId.id + '\$' + event.itemId.space;
+
+                      user.events.add(newEventItem);
+                      print(newEventItem.toString());
+                      Navigator.pop(context);
+                    });
+                    user.role = 'PLAYER';
+                    await updateUserDetails(user.userId.email, user);
                   }),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RoundedButton(
+                text: "Create Multiple Events",
+                fontSize: 14,
+                press: () async {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles();
+
+                  if (result != null) {
+                    File file = File(result.files.single.path!);
+                    String fileString = await file.readAsString();
+                    Map<String, dynamic> operationAttributes = {
+                      'eventsData': fileString
+                    };
+                    invokeOperationAsync(
+                        "createMultipleEvents",
+                        user.userId.space + "-calendar-" + user.userId.email,
+                        user.userId.email,
+                        operationAttributes, (asyncBoundary) {
+                      print(asyncBoundary);
+                    });
+                  } else {
+                    // User canceled the file picker
+                  }
+                },
+              ),
             )
           ],
         ),
