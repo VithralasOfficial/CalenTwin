@@ -19,6 +19,7 @@ import 'package:integrative/constants.dart';
 import 'package:place_picker/place_picker.dart';
 import 'Button_With_Icon.dart';
 import 'Simple_Text_Header.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class EventCreationBody extends StatefulWidget {
   final DateTime selectedDate;
@@ -54,6 +55,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
   int buttonColors = 0;
   Location location = Location(32, 35);
   bool canCreate = true;
+  bool loading = false;
 
   EventCreationBodyState({
     required this.date,
@@ -441,6 +443,20 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles();
 
+                  showDialog(
+                      context: context,
+                      builder: (_) => new AlertDialog(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            content: SpinKitCubeGrid(
+                              color: Colors.white,
+                              size: 60.0,
+                            ),
+                          ));
+
+                  await Future.delayed(Duration(seconds: 3));
+                  // This is for simulating a 'really' long operation task for creating events
+
                   if (result != null) {
                     File file = File(result.files.single.path!);
                     String fileString = await file.readAsString();
@@ -476,6 +492,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   } else {
                     // User canceled the file picker
                   }
+                  Navigator.of(context).pop();
                 },
               ),
             )

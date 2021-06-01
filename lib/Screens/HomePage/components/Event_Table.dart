@@ -42,16 +42,12 @@ class EventTableState extends State<EventTable> {
   }
 
   List<EventItem> getEventsFromDay(DateTime date) {
-    if (eventsByDate![date] != null)
-      print("DATE :  " +
-          date.day.toString() +
-          " | " +
-          eventsByDate![date]!.length.toString());
     return eventsByDate![date] ?? [];
   }
 
   void showUserEvents() {
     print("USER HASS ITEMS :" + user.events.length.toString());
+    eventsByDate = {};
 
     user.events.forEach((element) {
       if (eventsByDate![element.date] == null) {
@@ -160,7 +156,7 @@ class EventTableState extends State<EventTable> {
                                       user: user);
                                 },
                               ),
-                            );
+                            ).then((value) => setState(() {}));
                           },
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),

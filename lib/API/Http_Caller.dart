@@ -88,7 +88,7 @@ Future<void> createNewItem(
   }
 }
 
-void updateItem(
+Future<void> updateItem(
     String id,
     String type,
     String name,
@@ -100,13 +100,16 @@ void updateItem(
 
   try {
     await client.put(
-        Uri.http("10.0.2.2:8041", "/twins/items/$kSpace/$userEmail/$id"),
+        Uri.http(
+            "10.0.2.2:8041", "/twins/items/$kSpace/$userEmail/$kSpace/$id"),
         body: jsonEncode({
-          'itemId': jsonEncode(ItemId(kSpace, id)),
+          'itemId': ItemId(kSpace, id).toJson(),
           'type': type,
+          'active': active,
+          'name': name,
           'createdBy': CreatedBy(UserId(kSpace, userEmail)).toJson(),
-          'location': jsonEncode(location),
-          'itemAttributes': jsonEncode(attributes)
+          'location': location.toJson(),
+          'itemAttributes': attributes
         }),
         headers: kJsonHeaders);
   } finally {
@@ -124,7 +127,6 @@ Future<void> retrieveItem(
             "10.0.2.2:8041", "/twins/items/$kSpace/$userEmail/$kSpace/$id"),
         headers: kJsonHeaders);
 
-    print("RESPONSE : " + uriResponse.body);
     onLoaded(jsonDecode(uriResponse.body));
   } finally {
     client.close();

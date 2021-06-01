@@ -11,13 +11,12 @@ class EventView extends StatelessWidget {
   final String avatar;
   final UserBoundary user;
 
-  const EventView({
-    required this.activityCat,
-     required this.color,
-     required this.event,
-     required this.avatar,
-    required this.user
-  });
+  const EventView(
+      {required this.activityCat,
+      required this.color,
+      required this.event,
+      required this.avatar,
+      required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,9 @@ class EventView extends StatelessWidget {
             ),
             Expanded(
               child: Center(
-                child: Text(event.title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
+                child: Text(
+                  event.title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -56,25 +54,18 @@ class EventView extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(
-                      Icons.settings_sharp
-                  )
-              )
-          ),
+                  icon: Icon(Icons.settings_sharp))),
           IconButton(
               onPressed: () {
-                Navigator.popUntil(context,
-                        (route) => route.settings.name == "/HomeScreen");
+                Navigator.popUntil(
+                    context, (route) => route.settings.name == "/HomeScreen");
               },
-              icon: Icon(
-                  Icons.home
-              )
-          )
+              icon: Icon(Icons.home))
         ],
       ),
       body: EventViewBody(
         event: event,
-        avatar: avatar,
+        user: user,
       ),
     );
   }
