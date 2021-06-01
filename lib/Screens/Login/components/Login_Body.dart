@@ -90,6 +90,7 @@ class _LoginUpBodyState extends State<LoginBody> {
       for (Map<String, dynamic> itemMap in response) {
         EventItem eventLoaded = EventItem.fromJson(itemMap['itemAttributes']);
         ItemId id = ItemId.fromJson(itemMap['itemId']);
+        print("LOADED : " + itemMap.toString());
         eventLoaded.itemId = id.id + '\$' + id.space;
         user.events.add(eventLoaded);
       }

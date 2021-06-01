@@ -171,12 +171,8 @@ void invokeOperation(String type, String itemId, String userEmail,
   }
 }
 
-void invokeOperationAsync(
-    String type,
-    String itemId,
-    String userEmail,
-    Map<String, dynamic> attributes,
-    void onInitialized(OperationBoundary operation)) async {
+void invokeOperationAsync(String type, String itemId, String userEmail,
+    Map<String, dynamic> attributes, void onInitialized(dynamic object)) async {
   var client = http.Client();
 
   try {
