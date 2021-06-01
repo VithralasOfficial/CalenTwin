@@ -94,7 +94,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SettingsScreen();
+                          return SettingsScreen(user: user);
                         },
                       ),
                     );
@@ -415,9 +415,9 @@ class EventCreationBodyState extends State<EventCreationBody> {
                             title: new Text("Error!"),
                             content: Container(
                                 width: size.width * 0.8,
-                                height: size.height * 0.06,
+                                height: size.height * 0.13,
                                 child: new Text("An event with the same time has already been set to this date!"
-                                    "\n Change the time to try again.")
+                                    "\n\nChange the time and try again.")
                             ),
                             actions: <Widget>[
                               // ignore: deprecated_member_use

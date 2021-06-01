@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/components/Rounded_Button.dart';
 import 'package:integrative/constants.dart';
 import 'Editable_Text.dart';
 
 class SettingsScreenBody extends StatelessWidget {
+  final UserBoundary user;
+
+  const SettingsScreenBody({
+    required this.user
+  });
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -15,22 +22,19 @@ class SettingsScreenBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/images/Avatar.png"
+                user.avatar
               ),
             ],
           ),
         ),
         Editable_Text(
-            text: "User's Name"
+            text: user.username
         ),
         Editable_Text(
-            text: "User's ID"
-        ),
-        Editable_Text(
-          text: "User's Email"
+          text: user.userId.email
         ),
         Container(
-          height: size.height * 0.32,
+          height: size.height * 0.39,
         ),
         RoundedButton(
             text: "Change Password",

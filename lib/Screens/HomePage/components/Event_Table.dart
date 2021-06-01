@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:integrative/Model/ItemBoundary.dart';
@@ -29,9 +27,13 @@ class EventTableState extends State<EventTable> {
   Map<DateTime, List<EventItem>>? eventsByDate;
   CalendarFormat calendarFormat = CalendarFormat.month;
   DateTime focusedDay = DateTime.now();
-  DateTime selectedDay = DateTime.now();
+  DateTime selectedDay = new DateTime(DateTime.now().year, DateTime.now().month,
+      DateTime.now().day);
+  String dayFormat = "";
 
-  EventTableState(this.user);
+  EventTableState(
+      this.user,
+  );
 
   @override
   void initState() {
@@ -56,8 +58,24 @@ class EventTableState extends State<EventTable> {
     });
   }
 
+  String getFormat() {
+    String format = selectedDay.year.toString();
+    if (selectedDay.month < 10)
+      format += "-0" +selectedDay.month.toString();
+    else
+      format += "-" +selectedDay.month.toString();
+    if (selectedDay.day < 10)
+      format += "-0" +selectedDay.day.toString();
+    else
+      format += "-" +selectedDay.day.toString();
+    format += " 00:00:00.000Z";
+    return format;
+  }
+
   @override
   Widget build(BuildContext context) {
+    dayFormat = getFormat();
+    selectedDay = DateTime.parse(dayFormat);
     Size size = MediaQuery.of(context).size;
     showUserEvents();
     return Scaffold(
@@ -131,7 +149,9 @@ class EventTableState extends State<EventTable> {
                                       activityCat: whatIcon(event.category),
                                       color: whatColor(event.category),
                                       event: event,
-                                      avatar: user.avatar);
+                                      avatar: user.avatar,
+                                      user: user
+                                  );
                                 },
                               ),
                             );
@@ -190,7 +210,7 @@ class EventTableState extends State<EventTable> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return SettingsScreen();
+                        return SettingsScreen(user: user);
                       },
                     ),
                   );
@@ -246,6 +266,7 @@ class EventTableState extends State<EventTable> {
             return UpcomingEventsScreen(
               events: upcomingEvents,
               avatar: user.avatar,
+              user: user
             );
           },
         ),

@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/CreateEvent/components/Simple_Text_Header.dart';
 import 'package:integrative/Screens/EventView/Event_View_Screen.dart';
 import 'package:integrative/Screens/HomePage/components/Event.dart';
@@ -10,12 +11,14 @@ class UpcomingEventWidget extends StatelessWidget {
   final Color color;
   final EventItem event;
   final String avatar;
+  final UserBoundary user;
 
   const UpcomingEventWidget({
     required this.activityCat,
     required this.color,
     required this.event,
     required this.avatar,
+    required this.user
   });
 
   @override
@@ -39,6 +42,7 @@ class UpcomingEventWidget extends StatelessWidget {
                           color: this.color,
                           event: event,
                           avatar: avatar,
+                          user: user
                         );
                       },
                     ),

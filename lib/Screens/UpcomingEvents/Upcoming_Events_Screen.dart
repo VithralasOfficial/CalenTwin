@@ -8,8 +8,13 @@ import '../../constants.dart';
 class UpcomingEventsScreen extends StatelessWidget {
   final List<EventItem>? events;
   final String avatar;
+  final UserBoundary user;
 
-  const UpcomingEventsScreen({required this.avatar, this.events});
+  const UpcomingEventsScreen({
+    required this.avatar,
+    required this.user,
+    this.events,
+    });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class UpcomingEventsScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return SettingsScreen();
+                          return SettingsScreen(user: user);
                         },
                       ),
                     );
@@ -46,6 +51,7 @@ class UpcomingEventsScreen extends StatelessWidget {
       body: UpcomingEventsBody(
         events: events,
         avatar: avatar,
+        user: user
       ),
     );
   }

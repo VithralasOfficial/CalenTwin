@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/constants.dart';
 import 'Upcoming_Event_Widget.dart';
@@ -6,9 +7,11 @@ import 'Upcoming_Event_Widget.dart';
 class UpcomingEventsBody extends StatelessWidget {
   final List<EventItem>? events;
   final String avatar;
+  final UserBoundary user;
 
   const UpcomingEventsBody({
     required this.avatar,
+    required this.user,
     this.events,
   });
 
@@ -20,7 +23,9 @@ class UpcomingEventsBody extends StatelessWidget {
               activityCat: whatIcon(element.category),
               color: whatColor(element.category),
               event: element,
-              avatar: avatar)
+              avatar: avatar,
+              user: user
+          )
       );
     });
     return new Column(children: upcomingEvents,);
