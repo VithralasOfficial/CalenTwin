@@ -63,4 +63,15 @@ class EventItem {
         'participants': participants.toString(),
         'description': description,
       };
+
+  @override
+  int get hashCode => title.hashCode + date.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    EventItem otherEvent = other as EventItem;
+    return title == otherEvent.title &&
+        date == otherEvent.date &&
+        hours == otherEvent.hours;
+  }
 }

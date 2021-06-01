@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:day_night_time_picker/lib/constants.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:integrative/API/Http_Caller.dart';
 import 'package:integrative/Model/ItemBoundary.dart';
+import 'package:integrative/Model/OperationBoundary.dart';
 import 'package:integrative/Model/UserBoundary.dart';
 import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/Screens/Login/components/Text_Field_Container.dart';
@@ -326,8 +328,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
                                 },
                               ),
                             ],
-                          )
-                  );
+                          ));
                 },
                 icon: Icon(
                   Icons.view_headline_sharp,
@@ -369,11 +370,11 @@ class EventCreationBodyState extends State<EventCreationBody> {
                   press: () async {
                     for (var i = 0; i < user.events.length; i++) {
                       if (user.events.elementAt(i).date.compareTo(date) == 0 &&
-                          user.events.elementAt(i).hours.compareTo(hours) == 0) {
+                          user.events.elementAt(i).hours.compareTo(hours) ==
+                              0) {
                         canCreate = false;
                         break;
-                      }
-                      else{
+                      } else {
                         canCreate = true;
                       }
                     }
@@ -407,29 +408,27 @@ class EventCreationBodyState extends State<EventCreationBody> {
                       });
                       user.role = 'PLAYER';
                       await updateUserDetails(user.userId.email, user);
-                    }
-                    else {
+                    } else {
                       showDialog(
                           context: context,
                           builder: (_) => new AlertDialog(
-                            title: new Text("Error!"),
-                            content: Container(
-                                width: size.width * 0.8,
-                                height: size.height * 0.13,
-                                child: new Text("An event with the same time has already been set to this date!"
-                                    "\n\nChange the time and try again.")
-                            ),
-                            actions: <Widget>[
-                              // ignore: deprecated_member_use
-                              FlatButton(
-                                child: Text("Ok"),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          )
-                      );
+                                title: new Text("Error!"),
+                                content: Container(
+                                    width: size.width * 0.8,
+                                    height: size.height * 0.13,
+                                    child: new Text(
+                                        "An event with the same time has already been set to this date!"
+                                        "\n\nChange the time and try again.")),
+                                actions: <Widget>[
+                                  // ignore: deprecated_member_use
+                                  FlatButton(
+                                    child: Text("Ok"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ));
                     }
                   }),
             ),
@@ -452,8 +451,27 @@ class EventCreationBodyState extends State<EventCreationBody> {
                         "createMultipleEvents",
                         user.userId.space + "-calendar-" + user.userId.email,
                         user.userId.email,
-                        operationAttributes, (asyncBoundary) {
-                      print(asyncBoundary);
+                        operationAttributes, (asyncBoundary) async {
+                      bool eventsSaved = false;
+                      print("ASYNC BOUNDARY:" + jsonEncode(asyncBoundary));
+                      String ticketId =
+                          OperationBoundary.fromJson(asyncBoundary)
+                              .operationAttributes['futureTicketId'];
+                      for (int i = 0; i < 50 && !eventsSaved; i++) {
+                        await Future.delayed(Duration(seconds: 1));
+                        try {
+                          await retrieveItem(ticketId, user.userId.email,
+                              (loadedObject) {
+                            print("Loaded Async Ticket: " +
+                                loadedObject.toString());
+
+                            loadUserEvents(user);
+                          });
+                          eventsSaved = true;
+                        } catch (e) {
+                          print("ERROR " + e.toString());
+                        }
+                      }
                     });
                   } else {
                     // User canceled the file picker
@@ -465,5 +483,23 @@ class EventCreationBodyState extends State<EventCreationBody> {
         ),
       ),
     );
+  }
+
+  void loadUserEvents(UserBoundary user) async {
+    invokeOperation(
+        "getMyEvents",
+        user.userId.space + "-calendar-" + user.userId.email,
+        user.userId.email,
+        {'size': 100, 'page': 0}, (response) {
+      for (Map<String, dynamic> itemMap in response) {
+        EventItem eventLoaded = EventItem.fromJson(itemMap['itemAttributes']);
+        ItemId id = ItemId.fromJson(itemMap['itemId']);
+        print("LOADED : " + itemMap.toString());
+        eventLoaded.itemId = id.id + '\$' + id.space;
+        user.events.add(eventLoaded);
+      }
+
+      Navigator.of(context).pop();
+    });
   }
 }

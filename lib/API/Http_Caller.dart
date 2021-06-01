@@ -114,16 +114,18 @@ void updateItem(
   }
 }
 
-void retrieveItem(String id, String userEmail,
-    void onLoaded(ItemBoundary itemBoundary)) async {
+Future<void> retrieveItem(
+    String id, String userEmail, void onLoaded(dynamic itemBoundary)) async {
   var client = http.Client();
 
   try {
     var uriResponse = await client.get(
-        Uri.http("10.0.2.2:8041", "/twins/items/$kSpace/$userEmail/$id"),
+        Uri.http(
+            "10.0.2.2:8041", "/twins/items/$kSpace/$userEmail/$kSpace/$id"),
         headers: kJsonHeaders);
 
-    onLoaded(ItemBoundary.fromJson(jsonDecode(uriResponse.body)));
+    print("RESPONSE : " + uriResponse.body);
+    onLoaded(jsonDecode(uriResponse.body));
   } finally {
     client.close();
   }

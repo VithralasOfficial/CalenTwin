@@ -27,12 +27,12 @@ class EventTableState extends State<EventTable> {
   Map<DateTime, List<EventItem>>? eventsByDate;
   CalendarFormat calendarFormat = CalendarFormat.month;
   DateTime focusedDay = DateTime.now();
-  DateTime selectedDay = new DateTime(DateTime.now().year, DateTime.now().month,
-      DateTime.now().day);
+  DateTime selectedDay = new DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day);
   String dayFormat = "";
 
   EventTableState(
-      this.user,
+    this.user,
   );
 
   @override
@@ -42,10 +42,17 @@ class EventTableState extends State<EventTable> {
   }
 
   List<EventItem> getEventsFromDay(DateTime date) {
+    if (eventsByDate![date] != null)
+      print("DATE :  " +
+          date.day.toString() +
+          " | " +
+          eventsByDate![date]!.length.toString());
     return eventsByDate![date] ?? [];
   }
 
   void showUserEvents() {
+    print("USER HASS ITEMS :" + user.events.length.toString());
+
     user.events.forEach((element) {
       if (eventsByDate![element.date] == null) {
         List<EventItem> newList = [];
@@ -61,13 +68,13 @@ class EventTableState extends State<EventTable> {
   String getFormat() {
     String format = selectedDay.year.toString();
     if (selectedDay.month < 10)
-      format += "-0" +selectedDay.month.toString();
+      format += "-0" + selectedDay.month.toString();
     else
-      format += "-" +selectedDay.month.toString();
+      format += "-" + selectedDay.month.toString();
     if (selectedDay.day < 10)
-      format += "-0" +selectedDay.day.toString();
+      format += "-0" + selectedDay.day.toString();
     else
-      format += "-" +selectedDay.day.toString();
+      format += "-" + selectedDay.day.toString();
     format += " 00:00:00.000Z";
     return format;
   }
@@ -150,8 +157,7 @@ class EventTableState extends State<EventTable> {
                                       color: whatColor(event.category),
                                       event: event,
                                       avatar: user.avatar,
-                                      user: user
-                                  );
+                                      user: user);
                                 },
                               ),
                             );
@@ -264,10 +270,7 @@ class EventTableState extends State<EventTable> {
         MaterialPageRoute(
           builder: (context) {
             return UpcomingEventsScreen(
-              events: upcomingEvents,
-              avatar: user.avatar,
-              user: user
-            );
+                events: upcomingEvents, avatar: user.avatar, user: user);
           },
         ),
       );

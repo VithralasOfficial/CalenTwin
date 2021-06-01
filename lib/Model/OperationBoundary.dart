@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:integrative/Model/ItemBoundary.dart';
 import 'package:integrative/Model/UserBoundary.dart';
 
@@ -45,13 +47,13 @@ class OperationBoundary {
 
 class OperationId {
   String space;
-  String email;
+  String id;
 
-  OperationId(this.space, this.email);
+  OperationId(this.space, this.id);
 
   OperationId.fromJson(Map<String, dynamic> json)
       : space = json['space'],
-        email = json['email'];
+        id = json['id'];
 }
 
 class OperationItem {
