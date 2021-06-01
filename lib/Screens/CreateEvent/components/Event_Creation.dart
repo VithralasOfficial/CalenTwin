@@ -51,6 +51,7 @@ class EventCreationBodyState extends State<EventCreationBody> {
   String hours = "00:00";
   int buttonColors = 0;
   Location location = Location(32, 35);
+  bool canCreate = true;
 
   EventCreationBodyState({
     required this.date,
@@ -325,7 +326,8 @@ class EventCreationBodyState extends State<EventCreationBody> {
                                 },
                               ),
                             ],
-                          ));
+                          )
+                  );
                 },
                 icon: Icon(
                   Icons.view_headline_sharp,
@@ -365,35 +367,70 @@ class EventCreationBodyState extends State<EventCreationBody> {
               child: RoundedButton(
                   text: "Create Event",
                   press: () async {
-                    attributes[eventController.text] = EventItem(
-                      title: eventController.text,
-                      date: date,
-                      category: category,
-                      owner: user.userId.email,
-                      hours: hours,
-                      description: description,
-                    );
-                    EventItem newEventItem = EventItem.fromJson(
-                        attributes[eventController.text].toJson());
+                    for (var i = 0; i < user.events.length; i++) {
+                      if (user.events.elementAt(i).date.compareTo(date) == 0 &&
+                          user.events.elementAt(i).hours.compareTo(hours) == 0) {
+                        canCreate = false;
+                        break;
+                      }
+                      else{
+                        canCreate = true;
+                      }
+                    }
+                    if (canCreate) {
+                      attributes[eventController.text] = EventItem(
+                        title: eventController.text,
+                        date: date,
+                        category: category,
+                        owner: user.userId.email,
+                        hours: hours,
+                        description: description,
+                      );
+                      EventItem newEventItem = EventItem.fromJson(
+                          attributes[eventController.text].toJson());
 
-                    user.role = 'MANAGER';
-                    await updateUserDetails(user.userId.email, user);
-                    await createNewItem(
-                        "Event",
-                        eventController.text,
-                        true,
-                        user.userId.email,
-                        location,
-                        attributes[eventController.text].toJson(), (event) {
-                      newEventItem.itemId =
-                          event.itemId.id + '\$' + event.itemId.space;
+                      user.role = 'MANAGER';
+                      await updateUserDetails(user.userId.email, user);
+                      await createNewItem(
+                          "Event",
+                          eventController.text,
+                          true,
+                          user.userId.email,
+                          location,
+                          attributes[eventController.text].toJson(), (event) {
+                        newEventItem.itemId =
+                            event.itemId.id + '\$' + event.itemId.space;
 
-                      user.events.add(newEventItem);
-                      print(newEventItem.toString());
-                      Navigator.pop(context);
-                    });
-                    user.role = 'PLAYER';
-                    await updateUserDetails(user.userId.email, user);
+                        user.events.add(newEventItem);
+                        print(newEventItem.toString());
+                        Navigator.pop(context);
+                      });
+                      user.role = 'PLAYER';
+                      await updateUserDetails(user.userId.email, user);
+                    }
+                    else {
+                      showDialog(
+                          context: context,
+                          builder: (_) => new AlertDialog(
+                            title: new Text("Error!"),
+                            content: Container(
+                                width: size.width * 0.8,
+                                height: size.height * 0.06,
+                                child: new Text("An event with the same time has already been set to this date!"
+                                    "\n Change the time to try again.")
+                            ),
+                            actions: <Widget>[
+                              // ignore: deprecated_member_use
+                              FlatButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          )
+                      );
+                    }
                   }),
             ),
             Padding(
