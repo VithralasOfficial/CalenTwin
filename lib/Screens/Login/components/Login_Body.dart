@@ -9,6 +9,7 @@ import 'package:integrative/Screens/HomePage/components/Event.dart';
 import 'package:integrative/Screens/Signup/Signup_Screen.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
 import 'package:integrative/components/Rounded_Button.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'Already_Have_An_Account_Check.dart';
 import 'Rounded_Password_Input_Field.dart';
 import 'Text_Field_Container.dart';
@@ -49,7 +50,16 @@ class _LoginUpBodyState extends State<LoginBody> {
               text: "LOGIN",
               press: () {
                 httpCaller.loginValidUser(mailController.text, (user) {
-                  loadUserEvents(user);
+                  if (user == "Error") {
+                    Alert(
+                            context: context,
+                            type: AlertType.error,
+                            title: "Could not sign in",
+                            desc: "User does not exist")
+                        .show();
+                  } else {
+                    loadUserEvents(user);
+                  }
                 });
               },
             ),

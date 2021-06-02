@@ -7,6 +7,7 @@ import 'package:integrative/Screens/Login/components/Rounded_Password_Input_Fiel
 import 'package:integrative/Screens/Login/components/Text_Field_Container.dart';
 import 'package:integrative/Screens/Welcome/components/Background.dart';
 import 'package:integrative/components/Rounded_Button.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SignUpBody extends StatefulWidget {
   @override
@@ -52,15 +53,24 @@ class _SignUpBodyState extends State<SignUpBody> {
               press: () {
                 createNewUser(mailController.text, usernameController.text,
                     "assets/images/Avatar.png", (user) {
-                  print(user.username.toString());
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return HomeScreen(user);
-                      },
-                    ),
-                  );
+                  if (user == "Error") {
+                    print("Error sign up");
+                    Alert(
+                            context: context,
+                            type: AlertType.error,
+                            title: "Could not sign up",
+                            desc: "Email address is invalid.")
+                        .show();
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return HomeScreen(user);
+                        },
+                      ),
+                    );
+                  }
                 });
               }),
           SizedBox(height: size.height * 0.005),

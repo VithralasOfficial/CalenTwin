@@ -8,7 +8,7 @@ import 'package:integrative/constants.dart';
 // ---------- User Related API ---------------
 
 void createNewUser(String email, String username, String avatar,
-    void onLoaded(UserBoundary userBoundary)) async {
+    void onLoaded(dynamic userBoundary)) async {
   var client = http.Client();
 
   try {
@@ -23,14 +23,15 @@ void createNewUser(String email, String username, String avatar,
         headers: kJsonHeaders);
 
     onLoaded(UserBoundary.fromJson(jsonDecode(uriResponse.body)));
+  } catch (e) {
+    onLoaded("Error");
   } finally {
     client.close();
   }
 }
 
 // Logins valid user and retrieves user details
-void loginValidUser(
-    String email, void onLoaded(UserBoundary userBoundary)) async {
+void loginValidUser(String email, void onLoaded(dynamic userBoundary)) async {
   var client = http.Client();
 
   try {
@@ -40,6 +41,8 @@ void loginValidUser(
         headers: kJsonHeaders);
 
     onLoaded(UserBoundary.fromJson(jsonDecode(uriResponse.body)));
+  } catch (e) {
+    onLoaded("Error");
   } finally {
     client.close();
   }
