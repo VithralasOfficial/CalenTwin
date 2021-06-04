@@ -13,3 +13,5 @@ The application holds many functions:
  6) View upcoming events (range can be changed).
 
 The code holds a Http_Caller.dart file in API package, this file contains the functions that connect the client with the spring server.
+
+This project focused mainly on Android but can be used on IOS as well.
