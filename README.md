@@ -1,16 +1,15 @@
 # CalenTwin
 
-A new Flutter application.
+An event managing application built using Flutter & dart in an Android Studio Environment.
 
-## Getting Started
+The application was built to integrate with a Spring server and an external database (In our project we used MongoDB).
 
-This project is a starting point for a Flutter application.
+The application holds many functions:
+ 1) SignUp and Login.
+ 2) Create an event.
+ 3) Delete an event.
+ 4) Add multiple events from a file.
+ 5) View each event.
+ 6) View upcoming events (range can be changed).
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The code holds a Http_Caller.dart file in API package, this file contains the functions that connect the client with the spring server.
